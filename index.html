@@ -1,311 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>NeverMissALead</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --bg: #F1EEE7;
-    --surface: #FFFFFF;
-    --surface-2: #E7E2D8;
-    --ink: #201F1D;
-    --muted: #6B6863;
-    --border: #D8D2C6;
-    --blueprint: #2F5D8A;
-    --blueprint-ink: #1D3F5E;
-    --safety: #C6531B;
-    --signal: #2C7A4B;
-    --bubble-out-bg: #2F5D8A;
-    --bubble-out-ink: #FFFFFF;
-    --bubble-in-bg: #FFFFFF;
-    --bubble-in-ink: #201F1D;
-    --shadow: 0 1px 0 rgba(32,31,29,0.04), 0 8px 24px -12px rgba(32,31,29,0.18);
-  }
+    --sky-1: #4B4FD6;
+    --sky-2: #7B5FCB;
+    --sky-3: #BD62A9;
+    --sky-4: #E9876F;
+    --sky-5: #F6C089;
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #17181A;
-      --surface: #1F2124;
-      --surface-2: #26282B;
-      --ink: #EDEAE2;
-      --muted: #9A968D;
-      --border: #34373A;
-      --blueprint: #7FB0DE;
-      --blueprint-ink: #B9DAF2;
-      --safety: #EF9358;
-      --signal: #77CB98;
-      --bubble-out-bg: #3E6E9C;
-      --bubble-out-ink: #FFFFFF;
-      --bubble-in-bg: #2B2D30;
-      --bubble-in-ink: #EDEAE2;
-      --shadow: 0 1px 0 rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #17181A;
-    --surface: #1F2124;
-    --surface-2: #26282B;
-    --ink: #EDEAE2;
-    --muted: #9A968D;
-    --border: #34373A;
-    --blueprint: #7FB0DE;
-    --blueprint-ink: #B9DAF2;
-    --safety: #EF9358;
-    --signal: #77CB98;
-    --bubble-out-bg: #3E6E9C;
+    --on-sky: #FFFFFF;
+    --on-sky-muted: rgba(255,255,255,0.82);
+    --on-sky-faint: rgba(255,255,255,0.58);
+
+    --glass-bg: rgba(255,255,255,0.14);
+    --glass-bg-strong: rgba(255,255,255,0.22);
+    --glass-border: rgba(255,255,255,0.30);
+
+    --card-bg: #FFFFFF;
+    --card-ink: #211F33;
+    --card-muted: #6E6C82;
+    --card-border: #ECE9F6;
+    --card-surface-2: #F5F3FB;
+
+    --accent: #4B4FD6;
+    --signal: #2C8F5F;
+
+    --bubble-out-bg: #4B4FD6;
     --bubble-out-ink: #FFFFFF;
-    --bubble-in-bg: #2B2D30;
-    --bubble-in-ink: #EDEAE2;
-    --shadow: 0 1px 0 rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    --bubble-in-bg: #F5F3FB;
+    --bubble-in-ink: #211F33;
+
+    --shadow-card: 0 30px 70px -30px rgba(30, 15, 60, 0.45), 0 4px 14px rgba(30, 15, 60, 0.10);
   }
 
   * { box-sizing: border-box; }
-  body {
+
+  html, body {
     margin: 0;
-    background: var(--bg);
-    color: var(--ink);
+    min-height: 100%;
+    background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 30%, var(--sky-3) 56%, var(--sky-4) 78%, var(--sky-5) 100%);
+    color: var(--on-sky);
     font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  .page {
-    max-width: 1120px;
+
+  .sky {
+    position: relative;
+    max-width: 1040px;
     margin: 0 auto;
-    padding: 28px 24px 72px;
+    padding: 28px 24px 90px;
+    overflow: hidden;
   }
 
-  .topbar {
+  .stars {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    height: 46%;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1.6px 1.6px at 8% 12%, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1.2px 1.2px at 18% 30%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1.4px 1.4px at 27% 8%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1.1px 1.1px at 35% 22%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.6px 1.6px at 44% 14%, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1.2px 1.2px at 52% 34%, rgba(255,255,255,0.65), transparent),
+      radial-gradient(1.3px 1.3px at 61% 10%, rgba(255,255,255,0.85), transparent),
+      radial-gradient(1.1px 1.1px at 68% 26%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 76% 16%, rgba(255,255,255,0.85), transparent),
+      radial-gradient(1.2px 1.2px at 84% 30%, rgba(255,255,255,0.65), transparent),
+      radial-gradient(1.4px 1.4px at 91% 12%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1.1px 1.1px at 97% 24%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.3px 1.3px at 5% 38%, rgba(255,255,255,0.55), transparent),
+      radial-gradient(1.2px 1.2px at 58% 4%, rgba(255,255,255,0.7), transparent);
+    background-repeat: no-repeat;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  }
+
+  .topnav {
+    position: relative;
+    z-index: 2;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 40px;
+    padding-bottom: 8px;
   }
-  .wordmark {
-    font-family: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 17px;
+    flex-shrink: 0;
   }
-  .wordmark-accent { color: var(--blueprint); }
-  .tag {
-    color: var(--muted);
-    font-size: 13px;
-    flex: 1;
-    min-width: 180px;
-  }
-  .pill {
+  .brand-text { display: flex; flex-direction: column; line-height: 1.25; }
+  .brand-name { font-family: "Fraunces", serif; font-weight: 600; font-size: 16px; }
+  .brand-tag { font-size: 12px; color: var(--on-sky-faint); }
+
+  .pill-status {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--muted);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 100px;
-    padding: 5px 12px 5px 9px;
+    padding: 7px 14px 7px 10px;
   }
   .pill-dot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    background: var(--safety);
+    background: #7CF0B2;
     animation: pulse 1.8s ease-in-out infinite;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .pill-dot { animation: none; }
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-  }
+  @media (prefers-reduced-motion: reduce) { .pill-dot { animation: none; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
   .hero {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 56px;
-    align-items: start;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 700px;
+    margin: 64px auto 0;
   }
-  @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; }
-  }
-
   .eyebrow {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-size: 12px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--blueprint-ink);
-    margin: 0 0 14px;
+    color: var(--on-sky-muted);
+    margin: 0 0 18px;
   }
   h1 {
-    font-family: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 600;
-    font-size: clamp(32px, 4vw, 44px);
-    line-height: 1.08;
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.12;
     letter-spacing: -0.01em;
-    margin: 0 0 18px;
+    margin: 0 0 22px;
     text-wrap: balance;
-    max-width: 20ch;
   }
+  h1 em { font-style: italic; font-weight: 400; color: var(--on-sky); }
   .lede {
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--ink);
-    max-width: 62ch;
-    margin: 0 0 32px;
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--on-sky-muted);
+    max-width: 56ch;
+    margin: 0 auto 36px;
   }
 
-  .tickets {
-    list-style: none;
-    margin: 0 0 32px;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    background: var(--surface);
-  }
-  @media (max-width: 640px) {
-    .tickets { grid-template-columns: repeat(2, 1fr); }
-  }
-  .ticket {
-    padding: 16px 14px;
+  .chips-row {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    border-right: 1px dashed var(--border);
-    position: relative;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
   }
-  .ticket:nth-child(4) { border-right: none; }
-  @media (max-width: 640px) {
-    .ticket:nth-child(2) { border-right: none; }
-    .ticket:nth-child(1), .ticket:nth-child(2) { border-bottom: 1px dashed var(--border); }
+  .glass-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    padding: 8px 16px 8px 8px;
+    font-size: 13px;
+    color: var(--on-sky);
   }
-  .ticket-index {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-  .ticket-label {
-    font-family: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    letter-spacing: 0.01em;
-  }
-  .ticket-detail {
-    font-size: 12.5px;
-    color: var(--muted);
-    line-height: 1.4;
+  .chip-index {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 24px;
-  }
-  .stat {
-    background: var(--surface);
-    padding: 14px 14px 16px;
+  .stats-row {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .glass-stat {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 12px 20px;
+    min-width: 140px;
+    text-align: left;
   }
   .stat-value {
-    font-family: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+    display: block;
+    font-family: "Fraunces", serif;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 22px;
     font-variant-numeric: tabular-nums;
-    color: var(--blueprint-ink);
   }
   .stat-label {
+    display: block;
     font-size: 11.5px;
-    color: var(--muted);
-    line-height: 1.3;
+    color: var(--on-sky-faint);
+    margin-top: 2px;
   }
 
-  .disclaimer {
-    font-size: 12.5px;
-    color: var(--muted);
-    border-left: 2px solid var(--border);
-    padding-left: 10px;
-    max-width: 52ch;
-    line-height: 1.5;
+  .skyline {
+    position: relative;
+    z-index: 1;
+    margin-top: 40px;
+    line-height: 0;
   }
+  .skyline svg { width: 100%; height: 90px; display: block; }
 
-  .phone-wrap {
+  .stage {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
-    position: sticky;
-    top: 24px;
+    margin-top: -50px;
   }
-  @media (max-width: 860px) {
-    .phone-wrap { position: static; }
-  }
-  .phone {
+
+  .product-card {
     width: 100%;
-    max-width: 360px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    box-shadow: var(--shadow);
+    max-width: 380px;
+    background: var(--card-bg);
+    border-radius: 30px;
+    box-shadow: var(--shadow-card);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 560px;
+    height: 580px;
+    color: var(--card-ink);
   }
   .phone-notch {
-    height: 6px;
-    width: 90px;
-    background: var(--border);
+    height: 5px;
+    width: 80px;
+    background: var(--card-border);
     border-radius: 100px;
-    margin: 10px auto 0;
+    margin: 14px auto 0;
     flex-shrink: 0;
   }
   .chat-header {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 16px 12px;
-    border-bottom: 1px solid var(--border);
+    padding: 14px 18px 14px;
+    border-bottom: 1px solid var(--card-border);
     flex-shrink: 0;
   }
   .chat-avatar {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background: var(--blueprint);
-    color: var(--bubble-out-ink);
+    background: var(--accent);
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Barlow Condensed", sans-serif;
+    font-family: "Fraunces", serif;
     font-weight: 600;
     font-size: 13px;
     flex-shrink: 0;
   }
   .chat-meta { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
   .chat-name { font-size: 13.5px; font-weight: 600; }
-  .chat-sub { font-size: 11.5px; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+  .chat-sub { font-size: 11.5px; color: var(--card-muted); font-family: "IBM Plex Mono", monospace; }
 
   .chat-thread {
     flex: 1;
     overflow-y: auto;
-    padding: 14px 12px;
+    padding: 16px 14px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -323,12 +317,12 @@
     font-size: 13.5px;
     line-height: 1.42;
   }
-  .msg-row.in .bubble { background: var(--bubble-in-bg); color: var(--bubble-in-ink); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .msg-row.in .bubble { background: var(--bubble-in-bg); color: var(--bubble-in-ink); border-bottom-left-radius: 4px; }
   .msg-row.out .bubble { background: var(--bubble-out-bg); color: var(--bubble-out-ink); border-bottom-right-radius: 4px; }
   .msg-time {
     font-family: "IBM Plex Mono", monospace;
     font-size: 10px;
-    color: var(--muted);
+    color: var(--card-muted);
     margin-top: 3px;
     padding: 0 3px;
   }
@@ -337,13 +331,13 @@
     font-size: 11px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--safety);
-    background: var(--surface-2);
+    color: #B8562F;
+    background: var(--card-surface-2);
     border-radius: 100px;
     padding: 5px 12px;
   }
   .booking-card {
-    background: var(--surface-2);
+    background: var(--card-surface-2);
     border: 1px solid var(--signal);
     border-radius: 10px;
     padding: 12px 14px;
@@ -358,7 +352,6 @@
     gap: 3px;
     padding: 10px 13px;
     background: var(--bubble-in-bg);
-    border: 1px solid var(--border);
     border-radius: 15px;
     border-bottom-left-radius: 4px;
   }
@@ -366,63 +359,52 @@
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: var(--muted);
+    background: var(--card-muted);
     animation: bounce 1.1s infinite ease-in-out;
   }
   .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
   .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
   @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) {
-    .typing-dots span { animation: none; opacity: 0.7; }
-  }
+  @media (prefers-reduced-motion: reduce) { .typing-dots span { animation: none; opacity: 0.7; } }
 
   .chat-input-row {
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--card-border);
     padding: 10px 12px 12px;
     flex-shrink: 0;
-    background: var(--surface);
+    background: var(--card-bg);
   }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 8px;
-    min-height: 0;
-  }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
   .chip {
     font-size: 12px;
     font-family: "IBM Plex Sans", sans-serif;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    color: var(--ink);
+    background: var(--card-surface-2);
+    border: 1px solid var(--card-border);
+    color: var(--card-ink);
     border-radius: 100px;
     padding: 6px 12px;
     cursor: pointer;
   }
-  .chip:hover { border-color: var(--blueprint); }
-  .chip:focus-visible, .chip-restart:focus-visible, .composer button:focus-visible, .composer input:focus-visible {
-    outline: 2px solid var(--blueprint);
+  .chip:hover { border-color: var(--accent); }
+  .chip:focus-visible, .restart:focus-visible, .composer button:focus-visible, .composer input:focus-visible {
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
-  .composer {
-    display: flex;
-    gap: 8px;
-  }
+  .composer { display: flex; gap: 8px; }
   .composer input {
     flex: 1;
-    border: 1px solid var(--border);
+    border: 1px solid var(--card-border);
     border-radius: 100px;
     padding: 9px 14px;
     font-size: 13.5px;
     font-family: inherit;
-    background: var(--bg);
-    color: var(--ink);
+    background: var(--card-surface-2);
+    color: var(--card-ink);
   }
   .composer input:disabled { opacity: 0.5; }
   .composer button {
     border: none;
-    background: var(--blueprint);
-    color: var(--bubble-out-ink);
+    background: var(--accent);
+    color: #fff;
     border-radius: 100px;
     padding: 9px 18px;
     font-size: 13px;
@@ -432,77 +414,100 @@
   .composer button:disabled { opacity: 0.4; cursor: default; }
 
   .restart {
+    margin-top: 22px;
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
     letter-spacing: 0.04em;
-    color: var(--muted);
-    background: none;
-    border: 1px solid var(--border);
+    color: var(--on-sky-muted);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 100px;
-    padding: 7px 16px;
+    padding: 9px 20px;
     cursor: pointer;
   }
-  .restart:hover { color: var(--ink); border-color: var(--blueprint); }
-</style>
+  .restart:hover { color: var(--on-sky); background: var(--glass-bg-strong); }
 
-<div class="page">
-  <header class="topbar">
-    <div class="wordmark">Never Miss <span class="wordmark-accent">A Lead</span></div>
-    <div class="tag">Missed-call recovery for site contractors</div>
-    <div class="pill"><span class="pill-dot"></span>Live demo</div>
+  .disclaimer {
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: var(--on-sky-faint);
+    max-width: 46ch;
+    text-align: center;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="sky">
+  <div class="stars" aria-hidden="true"></div>
+
+  <nav class="topnav">
+    <div class="brand">
+      <span class="brand-mark">N</span>
+      <div class="brand-text">
+        <span class="brand-name">NeverMissALead</span>
+        <span class="brand-tag">Missed-call recovery for site contractors</span>
+      </div>
+    </div>
+    <div class="pill-status"><span class="pill-dot"></span>Live demo</div>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">Missed Call &rarr; Booked Survey</p>
+    <h1>Every missed call becomes<br><em>a booked site survey.</em></h1>
+    <p class="lede">
+      Built for roofers, paving crews, landscapers and window installers who lose jobs to voicemail.
+      When a call goes unanswered, NeverMissALead texts the lead back in seconds, asks the questions
+      your dispatcher would ask, and puts a site survey straight onto your calendar.
+    </p>
+
+    <div class="chips-row" aria-label="How it works">
+      <span class="glass-chip"><span class="chip-index">01</span>Missed Call</span>
+      <span class="glass-chip"><span class="chip-index">02</span>Auto&#8209;Text</span>
+      <span class="glass-chip"><span class="chip-index">03</span>Qualify</span>
+      <span class="glass-chip"><span class="chip-index">04</span>Book Survey</span>
+    </div>
+
+    <div class="stats-row" aria-label="Demo stats">
+      <div class="glass-stat"><span class="stat-value" id="stat-timer">0:00</span><span class="stat-label">Time to first reply</span></div>
+      <div class="glass-stat"><span class="stat-value">0</span><span class="stat-label">Human touches</span></div>
+      <div class="glass-stat"><span class="stat-value">24/7</span><span class="stat-label">Coverage</span></div>
+    </div>
   </header>
 
-  <main class="hero">
-    <section class="pitch">
-      <p class="eyebrow">Missed Call &rarr; Booked Survey</p>
-      <h1>Every missed call becomes a booked site survey.</h1>
-      <p class="lede">
-        Built for roofers, paving crews, landscapers and window installers who lose jobs to voicemail.
-        When a call goes unanswered, NeverMissALead texts the lead back in seconds, asks the questions your
-        dispatcher would ask, and puts a site survey straight onto your calendar. Nobody on your team
-        touches it until the appointment is confirmed.
-      </p>
+  <div class="skyline" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path fill="rgba(30,18,55,0.30)" d="M0,120 L0,92 L50,58 L100,92 L100,78 L150,42 L200,78 L200,96 L260,62 L320,96 L320,82 L370,46 L420,82 L420,94 L480,60 L540,94 L540,72 L590,36 L640,72 L640,90 L700,62 L760,90 L760,80 L820,44 L880,80 L880,96 L940,64 L1000,96 L1000,84 L1050,50 L1100,84 L1100,94 L1150,66 L1200,94 L1200,120 Z"></path>
+    </svg>
+  </div>
 
-      <ol class="tickets" aria-label="How it works">
-        <li class="ticket"><span class="ticket-index">01</span><span class="ticket-label">Missed Call</span><span class="ticket-detail">Phone rings out or goes to voicemail.</span></li>
-        <li class="ticket"><span class="ticket-index">02</span><span class="ticket-label">Auto&#8209;Text</span><span class="ticket-detail">Lead gets a reply before they hang up.</span></li>
-        <li class="ticket"><span class="ticket-index">03</span><span class="ticket-label">Qualify</span><span class="ticket-detail">Urgency, address, homeowner or PM.</span></li>
-        <li class="ticket"><span class="ticket-index">04</span><span class="ticket-label">Book Survey</span><span class="ticket-detail">Slot goes straight onto the calendar.</span></li>
-      </ol>
-
-      <div class="stats" aria-label="Demo stats">
-        <div class="stat"><span class="stat-value" id="stat-timer">0:00</span><span class="stat-label">Time to first reply</span></div>
-        <div class="stat"><span class="stat-value">0</span><span class="stat-label">Human touches before booking</span></div>
-        <div class="stat"><span class="stat-value">24/7</span><span class="stat-label">Coverage, including after hours</span></div>
-      </div>
-
-      <p class="disclaimer">
-        This is a working simulation built for a client walkthrough. Everything below runs in your
-        browser, no real phone number is texted and no real calendar is booked.
-      </p>
-    </section>
-
-    <section class="phone-wrap" aria-label="Text message demo">
-      <div class="phone">
-        <div class="phone-notch"></div>
-        <div class="chat-header">
-          <div class="chat-avatar">AR</div>
-          <div class="chat-meta">
-            <span class="chat-name">Apex Roofing &amp; Exteriors</span>
-            <span class="chat-sub">(555) 291-0847</span>
-          </div>
-        </div>
-        <div class="chat-thread" id="thread"></div>
-        <div class="chat-input-row">
-          <div class="chips" id="chips"></div>
-          <form id="composer" class="composer">
-            <input id="composer-input" type="text" placeholder="Type the lead's reply..." autocomplete="off" disabled />
-            <button type="submit" id="send-btn" disabled>Send</button>
-          </form>
+  <main class="stage">
+    <section class="product-card" aria-label="Text message demo">
+      <div class="phone-notch"></div>
+      <div class="chat-header">
+        <div class="chat-avatar">AR</div>
+        <div class="chat-meta">
+          <span class="chat-name">Apex Roofing &amp; Exteriors</span>
+          <span class="chat-sub">(555) 291-0847</span>
         </div>
       </div>
-      <button class="restart" id="restart" type="button">Restart demo</button>
+      <div class="chat-thread" id="thread"></div>
+      <div class="chat-input-row">
+        <div class="chips" id="chips"></div>
+        <form id="composer" class="composer">
+          <input id="composer-input" type="text" placeholder="Type the lead's reply..." autocomplete="off" disabled />
+          <button type="submit" id="send-btn" disabled>Send</button>
+        </form>
+      </div>
     </section>
+
+    <button class="restart" id="restart" type="button">Restart demo</button>
+
+    <p class="disclaimer">
+      This is a working simulation built for a client walkthrough. Everything above runs in your
+      browser, no real phone number is texted and no real calendar is booked.
+    </p>
   </main>
 </div>
 
@@ -510,7 +515,7 @@
 (function () {
   var STEPS = [
     {
-      ai: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this an active leak or something you'd like assessed this week?",
+      ai: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this an active leak or something you'd like assessed this week? Reply STOP to opt out.",
       chips: ["Active leak right now", "This week is fine"]
     },
     {
@@ -550,7 +555,7 @@
   }
 
   var minuteOffset = 0;
-  function nextMinute() { minuteOffset += (Math.floor(Math.random() ? 1 : 1)); return minuteOffset; }
+  function nextMinute() { minuteOffset += 1; return minuteOffset; }
 
   function scrollToBottom() {
     thread.scrollTop = thread.scrollHeight;
@@ -689,7 +694,7 @@
     addSysBanner('Missed call • (555) 291-0847');
     startTimerDisplay();
     showTyping(function () {
-      addBubble('out', "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this an active leak or something you'd like assessed this week?");
+      addBubble('out', "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this an active leak or something you'd like assessed this week? Reply STOP to opt out.");
       stepIndex = 0;
       setChips(STEPS[0].chips);
       setBusy(false);
@@ -701,3 +706,6 @@
   reset();
 })();
 </script>
+
+</body>
+</html>
