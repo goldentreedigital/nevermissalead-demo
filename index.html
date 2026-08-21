@@ -169,6 +169,135 @@
   }
   .explainer strong { color: #fff; }
 
+  .stats-row {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 960px;
+    background: var(--frame-bg);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 12px;
+    box-shadow: 0 14px 34px -20px rgba(20,10,45,0.4);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: 18px;
+    overflow: hidden;
+  }
+  .stat-tile {
+    padding: 30px 24px 26px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .stat-tile:last-child { border-right: none; }
+  .stat-num {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 700;
+    font-size: clamp(44px, 6vw, 64px);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-tile[data-status="new"] .stat-num { color: var(--warn); }
+  .stat-tile[data-status="qualifying"] .stat-num { color: var(--accent); }
+  .stat-tile[data-status="booked"] .stat-num { color: var(--signal); }
+  .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+
+  .table-card, .calendar-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 960px;
+    background: var(--frame-bg);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 12px;
+    box-shadow: 0 14px 34px -20px rgba(20,10,45,0.4);
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .card-title {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+    font-weight: 600;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--sidebar-bg);
+  }
+  .table-scroll { overflow-x: auto; }
+  .leads-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .leads-table th {
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .leads-table td {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .leads-table td.number { font-family: "IBM Plex Mono", monospace; }
+  .leads-table tbody tr { cursor: pointer; }
+  .leads-table tbody tr:hover { background: var(--sidebar-bg); }
+  .leads-table tbody tr:last-child td { border-bottom: none; }
+
+  .calendar-grid { display: grid; grid-template-columns: repeat(5, 1fr); }
+  .calendar-day {
+    padding: 14px 12px;
+    border-right: 1px solid var(--border);
+    min-height: 110px;
+  }
+  .calendar-day:last-child { border-right: none; }
+  .calendar-day-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--faint);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .calendar-appt {
+    background: var(--signal-bg);
+    border: 1px solid rgba(31,138,87,0.25);
+    border-radius: 6px;
+    padding: 7px 9px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+  .calendar-appt:hover { border-color: var(--signal); }
+  .calendar-appt .appt-time {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    color: var(--signal);
+  }
+  .calendar-empty { font-size: 11.5px; color: var(--pending); }
+
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .stat-tile:nth-child(2) { border-right: none; }
+    .stat-tile:nth-child(1), .stat-tile:nth-child(2) { border-bottom: 1px solid var(--border); }
+    .calendar-grid { grid-template-columns: 1fr; }
+    .calendar-day { border-right: none; border-bottom: 1px solid var(--border); min-height: 0; }
+    .calendar-day:last-child { border-bottom: none; }
+  }
+
   .steps-strip {
     position: relative;
     z-index: 2;
@@ -559,6 +688,8 @@
           <div class="chk-item" data-field="urgency"><span class="chk"></span><span class="chk-label">Urgency</span></div>
           <div class="chk-item" data-field="address"><span class="chk"></span><span class="chk-label">Address</span></div>
           <div class="chk-item" data-field="role"><span class="chk"></span><span class="chk-label">Homeowner/PM</span></div>
+          <div class="chk-item" data-field="name"><span class="chk"></span><span class="chk-label">Name</span></div>
+          <div class="chk-item" data-field="email"><span class="chk"></span><span class="chk-label">Email</span></div>
           <div class="chk-item" data-field="appointment"><span class="chk"></span><span class="chk-label">Appointment</span></div>
         </div>
         <div class="thread" id="thread"></div>
@@ -567,6 +698,34 @@
   </div>
 
   <button class="restart" id="restart" type="button">Restart this lead</button>
+
+  <p class="explainer" style="margin-top: 34px;">Or see the full picture across every job at once:</p>
+
+  <div class="stats-row" aria-label="Lead summary">
+    <div class="stat-tile" data-status="new"><span class="stat-num" id="stat-new">0</span><span class="stat-label">New</span></div>
+    <div class="stat-tile" data-status="qualifying"><span class="stat-num" id="stat-qualifying">0</span><span class="stat-label">Qualifying</span></div>
+    <div class="stat-tile" data-status="booked"><span class="stat-num" id="stat-booked">0</span><span class="stat-label">Booked</span></div>
+    <div class="stat-tile" data-status="total"><span class="stat-num" id="stat-total">0</span><span class="stat-label">Total leads today</span></div>
+  </div>
+
+  <div class="table-card">
+    <div class="card-title">All Leads</div>
+    <div class="table-scroll">
+      <table class="leads-table">
+        <thead>
+          <tr>
+            <th>Caller</th><th>Name</th><th>Issue</th><th>Status</th><th>Address</th><th>Appointment</th><th>Last activity</th>
+          </tr>
+        </thead>
+        <tbody id="leads-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="calendar-card">
+    <div class="card-title">This Week</div>
+    <div class="calendar-grid" id="calendar-grid"></div>
+  </div>
 
   <p class="disclaimer">
     This is a working simulation built for a client walkthrough. Everything above runs in your
@@ -577,7 +736,7 @@
 <script>
 (function () {
   var LEADS = [
-    { id: 1, number: "(555) 291-0847", issue: "Roof leak, storm damage", status: "qualifying", showChecklist: true, script: [
+    { id: 1, number: "(555) 291-0847", issue: "Roof leak, storm damage", status: "qualifying", showChecklist: true, name: "Sarah Kim", address: "123 Maple St, Springfield", day: "Thu", time: "9:00am", lastActivity: "Just now", script: [
       { from: "sys", text: "Missed call • (555) 291-0847" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this an active leak or something you'd like assessed this week? Reply STOP to opt out." },
       { from: "in", text: "Active leak right now", field: "urgency" },
@@ -585,11 +744,15 @@
       { from: "in", text: "123 Maple St, Springfield", field: "address" },
       { from: "out", text: "Thanks. Are you the homeowner, or a property manager handling this on their behalf?" },
       { from: "in", text: "I'm the homeowner", field: "role" },
+      { from: "out", text: "Great, and can I get your name?" },
+      { from: "in", text: "Sarah Kim", field: "name" },
+      { from: "out", text: "Thanks, Sarah. What's the best email for the booking confirmation?" },
+      { from: "in", text: "sarah.kim@email.com", field: "email" },
       { from: "out", text: "Perfect. We have openings Thursday 9:00am or Friday 1:30pm for a free site survey, no charge, no obligation. Which works better?" },
       { from: "in", text: "Thursday 9:00am", field: "appointment" },
-      { from: "booking", text: "Site survey confirmed—Thu 9:00am, 123 Maple St, Springfield. Apex Roofing will send a reminder text the morning of." }
+      { from: "booking", text: "Site survey confirmed|Thu 9:00am, 123 Maple St, Springfield. Apex Roofing will send a reminder text the morning of." }
     ]},
-    { id: 2, number: "(555) 402-1187", issue: "Gutter overflow", status: "booked", script: [
+    { id: 2, number: "(555) 402-1187", issue: "Gutter overflow", status: "booked", name: "M. Alvarez", address: "88 Larch Avenue", day: "Wed", time: "10:00am", lastActivity: "12 min ago", script: [
       { from: "sys", text: "Missed call • (555) 402-1187" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" },
       { from: "in", text: "Gutters overflowed in the storm, water's pooling by the foundation" },
@@ -599,9 +762,9 @@
       { from: "in", text: "Homeowner" },
       { from: "out", text: "We have Wednesday 10:00am or Friday 2:00pm open for a free survey, which works?" },
       { from: "in", text: "Wednesday works" },
-      { from: "booking", text: "Site survey confirmed—Wed 10:00am, 88 Larch Avenue. Apex Roofing will send a reminder text the morning of." }
+      { from: "booking", text: "Site survey confirmed|Wed 10:00am, 88 Larch Avenue. Apex Roofing will send a reminder text the morning of." }
     ]},
-    { id: 3, number: "(555) 118-3390", issue: "Deck storm damage", status: "booked", script: [
+    { id: 3, number: "(555) 118-3390", issue: "Deck storm damage", status: "booked", name: "T. Nguyen", address: "14 Birchwood Close", day: "Mon", time: "9:30am", lastActivity: "31 min ago", script: [
       { from: "sys", text: "Missed call • (555) 118-3390" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" },
       { from: "in", text: "A branch came down on the back deck, nothing dangerous, just needs a look" },
@@ -611,19 +774,19 @@
       { from: "in", text: "Homeowner" },
       { from: "out", text: "We have Thursday 1:00pm or Monday 9:30am open for a free survey, which works?" },
       { from: "in", text: "Monday" },
-      { from: "booking", text: "Site survey confirmed—Mon 9:30am, 14 Birchwood Close. Apex Roofing will send a reminder text the morning of." }
+      { from: "booking", text: "Site survey confirmed|Mon 9:30am, 14 Birchwood Close. Apex Roofing will send a reminder text the morning of." }
     ]},
-    { id: 4, number: "(555) 764-2201", issue: "Siding, hail damage", status: "qualifying", script: [
+    { id: 4, number: "(555) 764-2201", issue: "Siding, hail damage", status: "qualifying", name: "Pending", address: "Pending", day: "", time: "", lastActivity: "4 min ago", script: [
       { from: "sys", text: "Missed call • (555) 764-2201" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" },
       { from: "in", text: "Hail dented up the siding pretty bad last week" },
       { from: "out", text: "Sorry to hear that, what's the property address so we can route a crew?" }
     ]},
-    { id: 5, number: "(555) 990-4471", issue: "Not yet replied", status: "new", script: [
+    { id: 5, number: "(555) 990-4471", issue: "Not yet replied", status: "new", name: "Pending", address: "Pending", day: "", time: "", lastActivity: "1 min ago", script: [
       { from: "sys", text: "Missed call • (555) 990-4471" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" }
     ]},
-    { id: 6, number: "(555) 335-6620", issue: "Chimney flashing leak", status: "booked", script: [
+    { id: 6, number: "(555) 335-6620", issue: "Chimney flashing leak", status: "booked", name: "D. Whitfield", address: "205 Kettering Road", day: "Tue", time: "11:00am", lastActivity: "48 min ago", script: [
       { from: "sys", text: "Missed call • (555) 335-6620" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" },
       { from: "in", text: "Water's coming in around the chimney flashing when it rains" },
@@ -633,9 +796,9 @@
       { from: "in", text: "Property manager" },
       { from: "out", text: "We have Tuesday 11:00am or Wednesday 3:00pm open for a free survey, which works?" },
       { from: "in", text: "Tuesday 11 is fine" },
-      { from: "booking", text: "Site survey confirmed—Tue 11:00am, 205 Kettering Road. Apex Roofing will send a reminder text the morning of." }
+      { from: "booking", text: "Site survey confirmed|Tue 11:00am, 205 Kettering Road. Apex Roofing will send a reminder text the morning of." }
     ]},
-    { id: 7, number: "(555) 218-9903", issue: "Skylight leak", status: "qualifying", script: [
+    { id: 7, number: "(555) 218-9903", issue: "Skylight leak", status: "qualifying", name: "Pending", address: "77 Oldfield Terrace", day: "", time: "", lastActivity: "6 min ago", script: [
       { from: "sys", text: "Missed call • (555) 218-9903" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" },
       { from: "in", text: "Skylight's dripping onto the kitchen counter, kind of urgent" },
@@ -643,7 +806,7 @@
       { from: "in", text: "77 Oldfield Terrace" },
       { from: "out", text: "Thanks, are you the homeowner or a property manager?" }
     ]},
-    { id: 8, number: "(555) 552-0148", issue: "Hail, insurance claim", status: "booked", script: [
+    { id: 8, number: "(555) 552-0148", issue: "Hail, insurance claim", status: "booked", name: "J. Carrow", address: "9 Fenwick Grove", day: "Fri", time: "9:00am", lastActivity: "1 hr ago", script: [
       { from: "sys", text: "Missed call • (555) 552-0148" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" },
       { from: "in", text: "Insurance wants a full roof inspection after the hailstorm, for a claim" },
@@ -653,13 +816,13 @@
       { from: "in", text: "Homeowner" },
       { from: "out", text: "We have Friday 9:00am or Monday 2:30pm open for a free survey, which works?" },
       { from: "in", text: "Friday 9am" },
-      { from: "booking", text: "Site survey confirmed—Fri 9:00am, 9 Fenwick Grove. Apex Roofing will send a reminder text the morning of." }
+      { from: "booking", text: "Site survey confirmed|Fri 9:00am, 9 Fenwick Grove. Apex Roofing will send a reminder text the morning of." }
     ]},
-    { id: 9, number: "(555) 671-3389", issue: "Not yet replied", status: "new", script: [
+    { id: 9, number: "(555) 671-3389", issue: "Not yet replied", status: "new", name: "Pending", address: "Pending", day: "", time: "", lastActivity: "Just now", script: [
       { from: "sys", text: "Missed call • (555) 671-3389 (after hours)" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" }
     ]},
-    { id: 10, number: "(555) 809-2276", issue: "Fascia and soffit rot", status: "booked", script: [
+    { id: 10, number: "(555) 809-2276", issue: "Fascia and soffit rot", status: "booked", name: "P. Ostrander", address: "41 Silverdale Street", day: "Thu", time: "10:00am", lastActivity: "2 hr ago", script: [
       { from: "sys", text: "Missed call • (555) 809-2276" },
       { from: "out", text: "Hey, sorry we missed your call at Apex Roofing & Exteriors. What's going on, and is this urgent or can it wait this week?" },
       { from: "in", text: "Noticed some soft, rotting wood along the fascia boards" },
@@ -669,7 +832,7 @@
       { from: "in", text: "Homeowner" },
       { from: "out", text: "We have Wednesday 1:00pm or Thursday 10:00am open for a free survey, which works?" },
       { from: "in", text: "Thursday 10" },
-      { from: "booking", text: "Site survey confirmed—Thu 10:00am, 41 Silverdale Street. Apex Roofing will send a reminder text the morning of." }
+      { from: "booking", text: "Site survey confirmed|Thu 10:00am, 41 Silverdale Street. Apex Roofing will send a reminder text the morning of." }
     ]}
   ];
 
@@ -729,7 +892,7 @@
   }
 
   function addBookingCard(text) {
-    var parts = text.split('—');
+    var parts = text.split('|');
     var row = document.createElement('div');
     row.className = 'msg-row sys';
     var card = document.createElement('div');
@@ -808,7 +971,78 @@
   function setLeadStatus(id, status) {
     var lead = LEADS.filter(function (l) { return l.id === id; })[0];
     if (lead) lead.status = status;
+    renderAll();
+  }
+
+  function renderStats() {
+    var newCount = LEADS.filter(function (l) { return l.status === 'new'; }).length;
+    var qualCount = LEADS.filter(function (l) { return l.status === 'qualifying' || l.status === 'human'; }).length;
+    var bookedCount = LEADS.filter(function (l) { return l.status === 'booked'; }).length;
+    document.getElementById('stat-new').textContent = newCount;
+    document.getElementById('stat-qualifying').textContent = qualCount;
+    document.getElementById('stat-booked').textContent = bookedCount;
+    document.getElementById('stat-total').textContent = LEADS.length;
+  }
+
+  function renderLeadsTable() {
+    var tbody = document.getElementById('leads-table-body');
+    tbody.innerHTML = '';
+    LEADS.forEach(function (lead) {
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td class="number">' + lead.number + '</td>' +
+        '<td>' + lead.name + '</td>' +
+        '<td>' + lead.issue + '</td>' +
+        '<td><span class="status-pill ' + lead.status + '">' + STATUS_LABEL[lead.status] + '</span></td>' +
+        '<td>' + lead.address + '</td>' +
+        '<td>' + (lead.day ? lead.day + ' ' + lead.time : 'Pending') + '</td>' +
+        '<td>' + lead.lastActivity + '</td>';
+      tr.addEventListener('click', function () {
+        selectLead(lead.id);
+        document.querySelector('.app-frame').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderCalendar() {
+    var grid = document.getElementById('calendar-grid');
+    grid.innerHTML = '';
+    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    days.forEach(function (day) {
+      var col = document.createElement('div');
+      col.className = 'calendar-day';
+      var label = document.createElement('div');
+      label.className = 'calendar-day-label';
+      label.textContent = day;
+      col.appendChild(label);
+      var appts = LEADS.filter(function (l) { return l.day === day; }).sort(function (a, b) { return a.time.localeCompare(b.time); });
+      if (!appts.length) {
+        var empty = document.createElement('div');
+        empty.className = 'calendar-empty';
+        empty.textContent = 'No surveys booked';
+        col.appendChild(empty);
+      } else {
+        appts.forEach(function (lead) {
+          var chip = document.createElement('div');
+          chip.className = 'calendar-appt';
+          chip.innerHTML = '<span class="appt-time">' + lead.time + '</span>' + lead.name + ', ' + lead.issue;
+          chip.addEventListener('click', function () {
+            selectLead(lead.id);
+            document.querySelector('.app-frame').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          col.appendChild(chip);
+        });
+      }
+      grid.appendChild(col);
+    });
+  }
+
+  function renderAll() {
     renderLeadsList();
+    renderStats();
+    renderLeadsTable();
+    renderCalendar();
   }
 
   function renderLeadsList() {
@@ -878,20 +1112,20 @@
     var lead = LEADS.filter(function (l) { return l.id === currentLeadId; })[0];
     if (lead.status === 'human') {
       lead.status = lead.baseStatus;
-      renderLeadsList();
+      renderAll();
       runCurrent();
     } else {
       playToken += 1;
       addSysBanner('You took over this conversation. AI paused.');
       lead.status = 'human';
-      renderLeadsList();
+      renderAll();
       updateTopbar(lead);
     }
   });
 
   restartBtn.addEventListener('click', runCurrent);
 
-  renderLeadsList();
+  renderAll();
   runCurrent();
 })();
 </script>
